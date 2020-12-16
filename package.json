@@ -4,16 +4,20 @@
   "description": "empty readme",
   "scripts": {
     "eslint": "eslint --ext .jsx --ext .js src/",
-    "build": "webpack --mode production",
-    "start": "webpack-dev-server"
+    "build": "webpack --config webpack.config.prod.js",
+    "start": "webpack serve --config webpack.config.dev.js"
   },
   "dependencies": {
-    "react": "17.0.1"
+    "react": "17.0.1",
+    "react-dom": "17.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.12.10",
+    "@babel/preset-env": "7.12.11",
+    "@babel/preset-react": "7.12.10",
     "babel-eslint": "10.1.0",
     "babel-loader": "8.2.2",
+    "css-loader": "5.0.1",
     "eslint": "7.15.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-plugin-import": "2.22.1",
@@ -21,6 +25,11 @@
     "eslint-plugin-jsx-a11y": "6.4.1",
     "eslint-plugin-react": "7.21.5",
     "eslint-plugin-react-hooks": "4.2.0",
+    "mini-css-extract-plugin": "1.3.3",
+    "node-sass": "5.0.0",
+    "sass-loader": "10.1.0",
+    "style-loader": "2.0.0",
+    "terser-webpack-plugin": "5.0.3",
     "webpack": "5.10.3",
     "webpack-cli": "4.2.0",
     "webpack-dev-server": "3.11.0"
