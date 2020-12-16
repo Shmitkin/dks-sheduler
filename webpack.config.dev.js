@@ -3,7 +3,7 @@ const pathToPublic = path.join(__dirname, `public`);
 
 module.exports = {
   mode: `development`,
-  entry: {bundle: [`./src/index.js`, `./src/style.scss`]},
+  entry: {bundle: [`./src/index.js`, `./src/styles/style.scss`]},
   output: {
     filename: `[name].js`,
     path: pathToPublic,
