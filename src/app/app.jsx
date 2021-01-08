@@ -6,10 +6,10 @@ export default function App() {
       <div className="main-container">
         <div className="header">
           <div className="header__menu">
-            <button className="header__menu-item" type="button">Раздел 1</button>
-            <button className="header__menu-item" type="button">Раздел 2</button>
-            <button className="header__menu-item" type="button">Раздел 3</button>
-            <button className="header__menu-item" type="button">Раздел 4</button>
+            <button className="header__menu-item" type="button">Общий</button>
+            <button className="header__menu-item" type="button">Задачи</button>
+            <button className="header__menu-item" type="button">Планировщик</button>
+            <button className="header__menu-item" type="button">Мониторинг</button>
           </div>
           <button className="header__autorization-button" type="button">Авторизация</button>
         </div>
