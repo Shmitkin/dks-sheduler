@@ -23,15 +23,13 @@ export default function App() {
           </div>
           <button className="header__autorization-button" type="button">Авторизация</button>
         </div>
-        <div className="main-content-container">
-          <Switch>
-            <Route exact path="/tasks" component={TasksPage} />
-            <Route exact path="/sheduler" component={ShedulerPage} />
-            <Route exact path="/monitoring" component={MonitoringPage} />
-            <Route exact path="/" component={MainPage} />
-            <Route path="*" component={MainPage} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path="/tasks" component={TasksPage} />
+          <Route exact path="/sheduler" component={ShedulerPage} />
+          <Route exact path="/monitoring" component={MonitoringPage} />
+          <Route exact path="/" component={MainPage} />
+          <Route path="*" component={MainPage} />
+        </Switch>
       </div>
     </>
   );

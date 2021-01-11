@@ -1,27 +1,124 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Operation as TasksOperation} from "../../store/tasks/tasks.js";
+import {getTasks, getTasksCount} from "../../store/tasks/selectors.js";
+
+import StepItem from './step-item.jsx';
+
+const emptyTask = {
+  name: ``,
+  id: null,
+  steps: [],
+};
 
 export default function TasksPage() {
+  const dispatch = useDispatch();
+
+  const tasks = useSelector(getTasks);
+  const tasksCount = useSelector(getTasksCount);
+
+  const [currentTask, setCurrentTask] = useState(null);
+
+  const deleteStepInCurrentTask = (stepId) => {
+    // 3. Ищем индекс шага который нужно удалить
+    const stepIndex = currentTask.steps.findIndex((item) => item.id === stepId);
+    // 4. Копируем остаток массива после индекса задачи чтобы переписать их id
+    const stepsToEditIndex = currentTask.steps.slice(stepIndex + 1);
+    // 5. Перепишем id в задачах в массиве созданом на шаге 4 и скопируем их в новый массив
+    const stepsWithEditedIndex = stepsToEditIndex.map((step) => ({...step, id: step.id - 1}));
+    // 6. Создадим новый массив который равен копии исходного до индекса и массива из шага 5
+    const editedStepsArray = currentTask.steps.slice(0, stepIndex).concat(stepsWithEditedIndex);
+    // 7. Присвоим отредактированный массив на шаге 6 в копию задачи созданной на шаге 2
+    setCurrentTask((prevState) => ({...prevState, steps: editedStepsArray}));
+  };
+
+  const addStepToCurrentTask = () => {
+    const emptyStep = {
+      name: ``,
+      id: currentTask.steps.length + 1,
+    };
+    setCurrentTask((prevState) => ({...prevState, steps: prevState.steps.concat(emptyStep)}));
+  };
+
+  useEffect(() => {
+    // временное условие чтобы сохранялись данные при переключении между вкладками
+    if (tasks.length === 0) {
+      dispatch(TasksOperation.loadTasks());
+    }
+  }, [dispatch, tasks]);
+
+  const onSaveStepButtonClickHandler = (editedStep) => {
+    const steps = currentTask.steps.slice();
+    let editedSteps = [];
+    const index = steps.findIndex((step) => step.id === editedStep.id);
+    if (index !== -1) {
+      editedSteps = steps.slice(0, index).concat(editedStep).concat(steps.slice(index + 1));
+    } else {
+      editedSteps = steps.slice().concat(editedStep);
+    }
+    setCurrentTask((prevState) => ({...prevState, steps: editedSteps}));
+  };
+
   return (
-    <>
+    <div className="tasks-page-container">
       <div className="task-area">
-        <p className="task-area__title">Область задач</p>
-        <ul className="task-area__list">
-          <li className="task-area__list-item">Задача1</li>
-          <li className="task-area__list-item">Задача2</li>
-          <li className="task-area__list-item">Задача3</li>
-        </ul>
-        <button className="task-area__button" type="button">Добавить задачу</button>
+        <p className="task-area__title">
+          {`Всего задач ${tasksCount}`}
+        </p>
+        <div className="task-area__list">
+          {tasks.map((task) => (
+            <li className="task-area__list-item" key={task.id}>
+              <button
+                type="button"
+                onClick={() => { setCurrentTask(task); }}
+                className="task-area__button"
+              >
+                {task.name}
+              </button>
+              <span>{`Шагов:${task.steps.length}`}</span>
+            </li>
+          ))}
+        </div>
+        <button className="task-area__button" type="button" onClick={() => { setCurrentTask(emptyTask); }}>Добавить задачу</button>
       </div>
 
       <div className="current-task-area">
-        <p className="current-task-area__title">Область конкретной задачи</p>
-        <ul className="current-task-area__list">
-          <li className="current-task-area__list-item">Шаг1</li>
-          <li className="current-task-area__list-item">Шаг2</li>
-          <li className="current-task-area__list-item">Шаг3</li>
-        </ul>
-        <button className="current-task-area__button" type="button">Добавить задачу</button>
+        {currentTask === null && <p>Выберите задачу или создайте новую</p>}
+        {currentTask !== null && (
+        <>
+          <p className="current-task-area__title">{`Название задачи: `}</p>
+          <input
+            value={currentTask.name}
+            onChange={(evt) => setCurrentTask((prevState) => ({...prevState, name: evt.target.value}))}
+          />
+          <ul className="current-task-area__list">
+            {currentTask.steps.map((step) => (
+              <StepItem
+                currentStep={step}
+                key={step.id}
+                onSaveButtonClick={onSaveStepButtonClickHandler}
+                onStepDeleteButtonClick={deleteStepInCurrentTask}
+              />
+            ))}
+          </ul>
+          <button
+            className="current-task-area__button"
+            type="button"
+            onClick={addStepToCurrentTask}
+          >
+            Добавить шаг
+          </button>
+          <button
+            className="current-task-area__button"
+            type="button"
+            onClick={() => { dispatch(TasksOperation.saveEditedTask(currentTask)); setCurrentTask(null); }}
+          >
+            Сохранить
+          </button>
+          <button className="current-task-area__button" type="button" onClick={() => { setCurrentTask(null); }}>Отменить</button>
+        </>
+        )}
       </div>
-    </>
+    </div>
   );
 }
