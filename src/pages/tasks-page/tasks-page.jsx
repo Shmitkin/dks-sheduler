@@ -37,6 +37,7 @@ export default function TasksPage() {
       name: ``,
       id: currentTask.steps.length + 1,
       endpoint: ``,
+      type: ``,
       params: [],
       error: ``,
       new: true,
