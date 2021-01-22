@@ -56,7 +56,7 @@ export default function StepItem({currentStep, onSaveButtonClick, onStepDeleteBu
     <li
       className="current-task-area__list-item"
     >
-      {isEditMode && (
+      {(isEditMode || step.new) && (
         <>
           <label className="step__list-item">
             <span>Название шага:</span>
@@ -116,7 +116,7 @@ export default function StepItem({currentStep, onSaveButtonClick, onStepDeleteBu
         </>
       )}
 
-      {!isEditMode && (
+      {!isEditMode && !step.new && (
         <>
           <div className="step__list-item-no-edit">
             <span>{`Шаг: ${step.id} - ${step.name}`}</span>

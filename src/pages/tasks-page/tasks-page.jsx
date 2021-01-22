@@ -39,6 +39,7 @@ export default function TasksPage() {
       endpoint: ``,
       params: [],
       error: ``,
+      new: true,
     };
     setCurrentTask((prevState) => ({...prevState, steps: prevState.steps.concat(emptyStep)}));
   };
@@ -55,7 +56,7 @@ export default function TasksPage() {
     let editedSteps = [];
     const index = steps.findIndex((step) => step.id === editedStep.id);
     if (index !== -1) {
-      editedSteps = steps.slice(0, index).concat(editedStep).concat(steps.slice(index + 1));
+      editedSteps = steps.slice(0, index).concat({...editedStep, new: false}).concat(steps.slice(index + 1));
     } else {
       editedSteps = steps.slice().concat(editedStep);
     }
