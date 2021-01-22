@@ -36,6 +36,9 @@ export default function TasksPage() {
     const emptyStep = {
       name: ``,
       id: currentTask.steps.length + 1,
+      endpoint: ``,
+      params: [],
+      error: ``,
     };
     setCurrentTask((prevState) => ({...prevState, steps: prevState.steps.concat(emptyStep)}));
   };
@@ -67,16 +70,15 @@ export default function TasksPage() {
         </p>
         <div className="task-area__list">
           {tasks.map((task) => (
-            <li className="task-area__list-item" key={task.id}>
-              <button
-                type="button"
-                onClick={() => { setCurrentTask(task); }}
-                className="task-area__button"
-              >
-                {task.name}
-              </button>
-              <span>{`Шагов:${task.steps.length}`}</span>
-            </li>
+            <button
+              key={task.id}
+              type="button"
+              onClick={() => { setCurrentTask(task); }}
+              className="task-area__list-item"
+            >
+              <span>{`Название: ${task.name}`}</span>
+              <span>{`Шагов: ${task.steps.length}`}</span>
+            </button>
           ))}
         </div>
         <button className="task-area__button" type="button" onClick={() => { setCurrentTask(emptyTask); }}>Добавить задачу</button>
@@ -86,11 +88,13 @@ export default function TasksPage() {
         {currentTask === null && <p>Выберите задачу или создайте новую</p>}
         {currentTask !== null && (
         <>
-          <p className="current-task-area__title">{`Название задачи: `}</p>
-          <input
-            value={currentTask.name}
-            onChange={(evt) => setCurrentTask((prevState) => ({...prevState, name: evt.target.value}))}
-          />
+          <label className="current-task-area__title">
+            <span>Название задачи:</span>
+            <input
+              value={currentTask.name}
+              onChange={(evt) => setCurrentTask((prevState) => ({...prevState, name: evt.target.value}))}
+            />
+          </label>
           <ul className="current-task-area__list">
             {currentTask.steps.map((step) => (
               <StepItem
