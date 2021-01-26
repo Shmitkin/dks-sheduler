@@ -8,6 +8,7 @@ import StepItem from './step-item.jsx';
 const emptyTask = {
   name: ``,
   id: null,
+  duration: ``,
   steps: [],
 };
 
@@ -76,10 +77,11 @@ export default function TasksPage() {
               key={task.id}
               type="button"
               onClick={() => { setCurrentTask(task); }}
-              className="task-area__list-item"
+              className="task-area__list-item task-area__task-button"
             >
               <span>{`Название: ${task.name}`}</span>
               <span>{`Шагов: ${task.steps.length}`}</span>
+              <span>{`Продолжительность: ${task.duration} минут`}</span>
             </button>
           ))}
         </div>
@@ -97,6 +99,15 @@ export default function TasksPage() {
               onChange={(evt) => setCurrentTask((prevState) => ({...prevState, name: evt.target.value}))}
             />
           </label>
+
+          <label className="current-task-area__title">
+            <span>Продолжительность:</span>
+            <input
+              value={currentTask.duration}
+              onChange={(evt) => setCurrentTask((prevState) => ({...prevState, duration: evt.target.value}))}
+            />
+          </label>
+
           <ul className="current-task-area__list">
             {currentTask.steps.map((step) => (
               <StepItem
