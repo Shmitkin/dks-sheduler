@@ -10,6 +10,9 @@ const emptyTask = {
   id: null,
   duration: ``,
   steps: [],
+  color: `#B5F2EA`,
+  startDate: ``,
+  startTime: ``,
 };
 
 export default function TasksPage() {
