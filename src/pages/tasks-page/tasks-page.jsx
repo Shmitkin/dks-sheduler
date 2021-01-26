@@ -104,7 +104,7 @@ export default function TasksPage() {
             <span>Продолжительность:</span>
             <input
               value={currentTask.duration}
-              onChange={(evt) => setCurrentTask((prevState) => ({...prevState, duration: evt.target.value}))}
+              onChange={(evt) => setCurrentTask((prevState) => ({...prevState, duration: Number(evt.target.value)}))}
             />
           </label>
 
