@@ -4,7 +4,10 @@ const mockTasksRequest = {
     {
       name: `Загрузить новые данные`,
       id: 1,
+      color: `#FED6BC`,
       duration: 120,
+      startDate: `2021-01-26`,
+      startTime: `20:00`,
       steps: [
         {
           name: `Запросить данные`,
@@ -49,8 +52,11 @@ const mockTasksRequest = {
 
     {
       name: `сделать бэкап`,
+      color: `#FDEED9`,
       id: 2,
-      duration: 80,
+      duration: 120,
+      startDate: `2021-01-27`,
+      startTime: `14:00`,
       steps: [
         {
           name: `Проверить разницу данных`,
@@ -96,6 +102,42 @@ const mockTasksRequest = {
           error: `send email`,
         },
       ],
+    },
+    {
+      name: `сделать что-то`,
+      color: `#C3FBD8`,
+      startDate: `2021-01-27`,
+      startTime: `09:00`,
+      id: 3,
+      duration: 240,
+      steps: [],
+    },
+    {
+      name: `сделать еще что-то`,
+      color: `#E7ECFF`,
+      startDate: `2021-01-29`,
+      startTime: `18:00`,
+      id: 4,
+      duration: 120,
+      steps: [],
+    },
+    {
+      name: `сделать что-либо`,
+      color: `#DEF7FE`,
+      startDate: `2021-01-27`,
+      startTime: `20:00`,
+      id: 5,
+      duration: 120,
+      steps: [],
+    },
+    {
+      name: `сделать бэкап еще чего то`,
+      color: `#FFFADD`,
+      startDate: `2021-01-28`,
+      startTime: `09:00`,
+      id: 6,
+      duration: 120,
+      steps: [],
     },
   ],
 };
